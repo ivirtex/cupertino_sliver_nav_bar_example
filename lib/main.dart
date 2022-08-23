@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
           slivers: [
             CupertinoSliverNavigationBar(
               leading: const Icon(CupertinoIcons.person_2),
+              middle: const Text('Large title clipping test'),
               largeTitle: Text(title),
               trailing: const Icon(CupertinoIcons.add_circled),
               stretch: true,
