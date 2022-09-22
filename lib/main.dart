@@ -12,35 +12,77 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String title = 'Title';
+  String title = 'Title ///';
 
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
       theme: const CupertinoThemeData(
-        barBackgroundColor: CupertinoColors.systemBackground,
+        barBackgroundColor: CupertinoColors.systemGroupedBackground,
       ),
-      home: CupertinoPageScaffold(
-        child: CustomScrollView(
-          slivers: [
-            CupertinoSliverNavigationBar(
-              leading: const Icon(CupertinoIcons.person_2),
-              middle: const Text('Large title clipping test'),
-              largeTitle: Text(title),
-              trailing: const Icon(CupertinoIcons.add_circled),
-              stretch: true,
-              border: null,
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: CupertinoSearchTextField(
-                  onChanged: (value) => setState(() => title = value),
+      home: Directionality(
+        textDirection: TextDirection.ltr,
+        child: CupertinoPageScaffold(
+          child: CustomScrollView(
+            slivers: [
+              CupertinoSliverNavigationBar(
+                largeTitle: Text(title),
+                stretch: true,
+                border: null,
+              ),
+              SliverToBoxAdapter(
+                child: ColoredBox(
+                  color: CupertinoColors.systemGroupedBackground,
+                  child: CupertinoListSection.insetGrouped(
+                    children: [
+                      CupertinoTextFormFieldRow(
+                        onChanged: (value) => setState(() {
+                          title = value;
+                        }),
+                        placeholder: 'title here',
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              const SliverFillRemaining(
+                child: ColoredBox(
+                  color: CupertinoColors.systemGroupedBackground,
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class NextPage extends StatelessWidget {
+  const NextPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      child: CustomScrollView(
+        slivers: [
+          const CupertinoSliverNavigationBar(
+            largeTitle: Text("Next page"),
+            stretch: true,
+            border: null,
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CupertinoButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Go back"),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
