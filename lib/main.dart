@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
               slivers: [
                 CupertinoSliverNavigationBar(
                   largeTitle: FilledButton(
-                    style: ButtonStyle(
+                    style: const ButtonStyle(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape:
                           MaterialStatePropertyAll(ContinuousRectangleBorder()),
@@ -62,9 +62,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     onPressed: () {},
                   ),
-                  // largeTitle: Row(),
                   // largeTitle: Text(title),
-                  // middle: Text(title),
                   stretch: true,
                   border: null,
                 ),
