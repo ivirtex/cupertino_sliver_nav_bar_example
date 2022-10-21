@@ -1,10 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:hand_signature/signature.dart';
-import 'package:scribble/scribble.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,16 +13,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String title = 'Title ///';
+  String title = '';
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   TextDirection _textDirection = TextDirection.ltr;
 
   double x = 0;
   double y = 0;
   double z = 0;
 
-  Matrix4 _matrix4 = Matrix4.identity()..setEntry(3, 2, 0.005);
+  final Matrix4 _matrix4 = Matrix4.identity()
+    ..setEntry(3, 2, 0.005)
+    ..rotateY(0.2);
 
   double _scroll = -100.0;
 
@@ -50,19 +47,20 @@ class _MyAppState extends State<MyApp> {
               controller: _scrollController,
               slivers: [
                 CupertinoSliverNavigationBar(
-                  largeTitle: FilledButton(
-                    style: const ButtonStyle(
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape:
-                          MaterialStatePropertyAll(ContinuousRectangleBorder()),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 70.0),
-                      child: Text('hit test'),
-                    ),
-                    onPressed: () {},
-                  ),
-                  // largeTitle: Text(title),
+                  largeTitle: title.isEmpty
+                      ? FilledButton(
+                          style: const ButtonStyle(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            shape: MaterialStatePropertyAll(
+                                ContinuousRectangleBorder()),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 70.0),
+                            child: Text('hit test'),
+                          ),
+                          onPressed: () {},
+                        )
+                      : Text(title),
                   stretch: true,
                   border: null,
                 ),
@@ -92,7 +90,8 @@ class _MyAppState extends State<MyApp> {
                                 _scrollController.position.hold(() {});
                               },
                             ),
-                            Card(
+                            Material(
+                              color: Colors.white,
                               child: Row(
                                 children: [
                                   Slider(
@@ -111,7 +110,7 @@ class _MyAppState extends State<MyApp> {
                           ],
                         ),
                         FilledButton(
-                          child: const Text('back'),
+                          child: const Text('unscroll'),
                           onPressed: () {
                             _scrollController.position.hold(() {}).cancel();
                           },
